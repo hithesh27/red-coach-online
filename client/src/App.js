@@ -5,14 +5,14 @@
 //redux 
 //bootstrap - cdn link we will use normal css styling.
 //icons -remix icons cdn link 
-//react -router dom without it .cannot make a single page 
+//react -router dom without it .cannot make a single page A
 import 'antd/dist/reset.css';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Register from './pages/Register';
+import Register from './pages/RegisterUser';
 import './resources/global.css'
-
+import './index.css'
 function App() {
   return (
     <div >
