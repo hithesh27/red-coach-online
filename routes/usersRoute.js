@@ -76,7 +76,7 @@ router.post('/login',async (req,res)=>{
     }
 })
 router.post('/get-user-by-id',authMiddleware,async (req,res)=>{
-  
+  console.log('userRoute');
    try{
     const userId = req.body.userId; // Potential issue
     //const userExists = await User.findById(userId); // Use userId instead of req.body.userId

@@ -1,10 +1,15 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 function PublicRoute({children}) {
-  console.log('Publicroute');
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      navigate('/');
+    }
+  },[])
   return (
     <div>
-      {children}
+     {localStorage.getItem('token')===null && children }
     </div>
   )
 }
