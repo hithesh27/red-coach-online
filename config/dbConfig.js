@@ -11,7 +11,7 @@ db.on('error',()=>console.log('mongodb connection failed'))
 module.exports=db;
 /*const mongoose = require('mongoose');
 
-// Define your MongoDB connection URL. Make sure to replace 'process.env.mongo_url' with your actual MongoDB connection string.
+//Define your MongoDB connection URL. Make sure to replace 'process.env.mongo_url' with your actual MongoDB connection string.
 const mongoUrl = process.env.mongo_url;
 
 // Connect to MongoDB

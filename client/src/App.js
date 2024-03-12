@@ -13,14 +13,17 @@ import Login from './pages/Login';
 import Register from './pages/RegisterUser';
 import './resources/global.css'
 import './index.css'
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 function App() {
+  console.log('APP')
   return (
     <div >
      <BrowserRouter>
      <Routes>
-        <Route path="/" element={<Home/>}></Route>
-        <Route path="/register" element={<Register/>}></Route>
-        <Route path="/login" element={<Login/>}></Route>
+        <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
+        <Route path="/register" element={<PublicRoute><Register/></PublicRoute>}></Route>
+        <Route path="/login" element={<PublicRoute><Login/></PublicRoute>}></Route>
      </Routes>
      </BrowserRouter>
     </div>

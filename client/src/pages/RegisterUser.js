@@ -5,6 +5,7 @@ import axios from 'axios'
 
 function Register() {
   async function onFinish(values){
+    console.log(values);
     try{
         const response= await axios.post('http://localhost:5000/api/users/register',values);
         if(response.data.success){

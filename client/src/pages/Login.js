@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form,message} from 'antd'
+import {Form,message,Input} from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 function Login() {
@@ -26,10 +26,10 @@ function Login() {
         <hr/>
       <Form layout='vertical' onFinish={onFinish} >
         <Form.Item label='Email' name='email'>
-            <input type='text'/>
+            <Input type='text'/>
         </Form.Item>
         <Form.Item label='Password' name='password'>
-            <input type='password' />
+            <Input type='password' />
         </Form.Item>
         <div className='d-flex justify-content-between align-items-center'>
         <Link to='/register'>Click Here To Register</Link>

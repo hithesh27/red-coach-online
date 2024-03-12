@@ -3,8 +3,7 @@ const app=express();
 const cors = require('cors');
 //to use dotenv variables
 require('dotenv').config()
-//const db=require('./config/dbConfig')
-//const dbConfig =require("./config/dbConfig");
+const db=require('./config/dbConfig')
 console.log('registerroute');
 const port=process.env.PORT || 5000;
 app.use(cors())

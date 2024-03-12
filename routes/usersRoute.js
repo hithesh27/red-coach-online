@@ -1,5 +1,5 @@
 const router =require('express').Router();
-
+const authMiddleware=require('../middleware/Auth');
 //register user
 const User=require('../models/usersModel')
 const bcrypt=require('bcryptjs')
@@ -8,6 +8,7 @@ router.post('/register', async (req,res) => {
     console.log('registerroute',req.body);
         try{
             const existingUser=await User.findOne({email : req.body.email});
+            console.log('findone')
             if(existingUser){
                 res.send({
                     message:'user alraedy exists',
@@ -36,7 +37,7 @@ router.post('/register', async (req,res) => {
                 data :null
             })
         }
-}); 
+});
 router.post('/login',async (req,res)=>{
     try{
         const  userExists=await User.findOne({email:req.body.email});
@@ -57,7 +58,7 @@ router.post('/login',async (req,res)=>{
                 data:null
             })
         }
-        const jwt_token=jwt.sign({userid:userExists._id},process.env.jwt_secret,{
+        const jwt_token=jwt.sign({userId:userExists._id},process.env.jwt_secret,{
             expiresIn:'1d'
         })
         res.send({
@@ -74,5 +75,23 @@ router.post('/login',async (req,res)=>{
         })
     }
 })
-
+router.post('/get-user-by-id',authMiddleware,async (req,res)=>{
+  
+   try{
+    const userId = req.body.userId; // Potential issue
+    //const userExists = await User.findById(userId); // Use userId instead of req.body.userId
+   // console.log(userExists)
+    res.send({
+        data:null,
+        message:'user fetched successfully',
+        success:true
+    })
+}catch(error){
+        res.send({
+            data:null,
+            message:error.message,
+            success:false
+        })
+}
+})
 module.exports=router
