@@ -16,7 +16,7 @@ import './index.css'
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 function App() {
-  console.log('APP')
+  //console.log('APP')
   return (
     <div >
      <BrowserRouter>

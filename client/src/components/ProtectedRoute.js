@@ -3,20 +3,24 @@ import { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
+import { setUser } from '../redux/usersSlice';
+import { useDispatch } from 'react-redux';
+
 function ProtectedRoute({children}){
     const Navigate=useNavigate();
-  const [loading,setLoading]=useState(true);
-
+    const [loading,setLoading]=useState(true);
+    const dispatch=useDispatch();
 
     const verifyToken=async ()=>{
-      
-            const response=await axios.post('http://localhost:5000/api/users/get-user-by-id',{},{
+        const response=await axios.post('http://localhost:5000/api/users/get-user-by-id',{},{
             headers:{
                 Authorization:`Bearer ${localStorage.getItem('token')}`
             }
         })
-        console.log('response')
+       // console.log('response')
         if(response.data.success){
+            //console.log(response.data.data)
+            dispatch(setUser(response.data.data))
             setLoading(false);
         }
         else{
@@ -24,7 +28,7 @@ function ProtectedRoute({children}){
             localStorage.removeItem('token');
             message.error(response.data.message);
             Navigate('/login');
-
+            
         }
    
     }
@@ -35,7 +39,7 @@ function ProtectedRoute({children}){
             setLoading(false)
             Navigate('/login');
         }
-    },[])
+    },[Navigate])
   return (
     <div>
         { !loading && children}
