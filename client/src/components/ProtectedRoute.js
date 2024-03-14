@@ -1,45 +1,51 @@
 import React from 'react';
-import { useState,useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import { setUser } from '../redux/usersSlice';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { showLoading ,hideLoading} from '../redux/alertsSlice';
 
 function ProtectedRoute({children}){
     const Navigate=useNavigate();
-    const [loading,setLoading]=useState(true);
     const dispatch=useDispatch();
-
-    const verifyToken=async ()=>{
-        const response=await axios.post('http://localhost:5000/api/users/get-user-by-id',{},{
-            headers:{
-                Authorization:`Bearer ${localStorage.getItem('token')}`
+    const  {loading}=useSelector((state)=>state.alert);
+            const verifyToken=async ()=>{
+                dispatch(showLoading());
+            try{
+                const response=await axios.post('http://localhost:5000/api/users/get-user-by-id',{},{
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            dispatch(hideLoading())
+            console.log('response');
+            if(response.data.success){
+                console.log('dispatch')
+                console.log('hello world',response.data.data)
+                dispatch(setUser(response.data.data))
             }
-        })
-       // console.log('response')
-        if(response.data.success){
-            //console.log(response.data.data)
-            dispatch(setUser(response.data.data))
-            setLoading(false);
+            else{
+                localStorage.removeItem('token');
+                message.error(response.data.message);
+                Navigate('/login');
+            }
         }
-        else{
-            setLoading(false);
-            localStorage.removeItem('token');
-            message.error(response.data.message);
-            Navigate('/login');
-            
+        catch(error){
+            dispatch(hideLoading())
+            message.error(error.message);
         }
-   
     }
-    useEffect(()=>{
-        if(localStorage.getItem('token')){
-            verifyToken();
-        }else{
-            setLoading(false)
-            Navigate('/login');
-        }
-    },[Navigate])
+useEffect(()=>{
+    if(localStorage.getItem('token')){
+        verifyToken();
+    }else{
+        
+        Navigate('/login');
+    }
+   },[])
   return (
     <div>
         { !loading && children}

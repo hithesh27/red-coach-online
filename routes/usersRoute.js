@@ -76,7 +76,7 @@ router.post('/login',async (req,res)=>{
     }
 })
 router.post('/get-user-by-id',authMiddleware,async (req,res)=>{
- // console.log('userRoute');
+  console.log('userRoute');
    try{
     const userId = req.body.userId; // Potential issue
     //console.log(userId);

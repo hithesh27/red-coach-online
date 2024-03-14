@@ -15,10 +15,14 @@ import './resources/global.css'
 import './index.css'
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
+import Loader from './components/Loader';
+import { useSelector } from 'react-redux';
 function App() {
-  //console.log('APP')
+  console.log('APP')
+  const {loading} = useSelector((state)=>state.alert);
   return (
     <div >
+    {loading   && <Loader></Loader>}
      <BrowserRouter>
      <Routes>
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
