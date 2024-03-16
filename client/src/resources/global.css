@@ -74,7 +74,7 @@ input{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.144) !important;
+    background-color: rgba(247, 235, 235, 0.144) !important;
     z-index: 10000;
   }
 

@@ -1,0 +1,60 @@
+.layout-parent {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+    height:100vh;
+    gap:10px
+  }
+  
+  .body {
+    width: 100%;
+  }
+  
+  .header {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.479);
+    width: 100%;
+    padding: 15px;
+  }
+  
+  .sidebar {
+    width: 300px;
+    background-color: var(--primary);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .content {
+    padding: 10px;
+  }
+
+  .menu-item {
+   padding: 5px 15px;
+   width:100%;
+   cursor: pointer;
+   transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 15px;
+  }
+  
+  .menu-item i{
+    font-size: 20px;
+    margin-right: 10px;
+    color: white;
+  }
+
+  .menu-item span {
+    color: white;
+    font-size: 18px;
+  }
+
+  .active-menu-item{
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  

@@ -17,6 +17,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 import Loader from './components/Loader';
 import { useSelector } from 'react-redux';
+import AdminBuses from './pages/Admin/AdminBuses';
+import AdminHome from './pages/Admin/AdminHome';
+import AdminUsers from './pages/Admin/AdminUsers';
 function App() {
   console.log('APP')
   const {loading} = useSelector((state)=>state.alert);
@@ -28,6 +31,9 @@ function App() {
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
         <Route path="/register" element={<PublicRoute><Register/></PublicRoute>}></Route>
         <Route path="/login" element={<PublicRoute><Login/></PublicRoute>}></Route>
+        <Route path="/admin" element={<ProtectedRoute><AdminHome/></ProtectedRoute>}></Route>
+        <Route path="/admin/buses" element={<ProtectedRoute><AdminBuses/></ProtectedRoute>}></Route>
+        <Route path="/admin/users" element={<ProtectedRoute><AdminUsers/></ProtectedRoute>}></Route>
      </Routes>
      </BrowserRouter>
     </div>

@@ -7,6 +7,7 @@ import { setUser } from '../redux/usersSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { showLoading ,hideLoading} from '../redux/alertsSlice';
+import DefaultLayout from './DefaultLayout';
 
 function ProtectedRoute({children}){
     const Navigate=useNavigate();
@@ -48,8 +49,7 @@ useEffect(()=>{
    },[])
   return (
     <div>
-        { !loading && children}
-        {loading && <div>loading</div>}
+        { !loading && <DefaultLayout>{children}</DefaultLayout>}
     </div>
   )
 }
