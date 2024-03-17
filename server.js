@@ -12,6 +12,9 @@ app.use(express.json())
 const usersRoute=require('./routes/usersRoute')
 app.use('/api/users',usersRoute)
 
+const busesRoute=require('./routes/busRoute');
+app.use('/api/admin',busesRoute);
+
 app.listen(port,()=>{
     console.log(`node server listening on port ${port}`)
 })

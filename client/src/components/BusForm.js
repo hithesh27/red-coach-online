@@ -12,7 +12,7 @@ const  onFinish=async (values)=>{
     try {
         dispatch(showLoading())
         if(type==='add'){
-            response=await axiosInstance.post('/api/buses/add-Bus',values);
+            response=await axiosInstance.post('http://localhost:5000/api/admin/buses',values);
         }
         else{}
         dispatch(hideLoading())

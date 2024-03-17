@@ -15,7 +15,7 @@ function AdminBuses() {
       Add
      </button>
    </div>
- {showBusForm && <BusForm showBusForm={showBusForm} setShowBusForm={setShowBusForm}></BusForm>} 
+ {showBusForm && <BusForm showBusForm={showBusForm} setShowBusForm={setShowBusForm} type="add"></BusForm>} 
    </div>
   )
 }
