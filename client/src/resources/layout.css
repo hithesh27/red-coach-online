@@ -12,22 +12,37 @@
   }
   
   .header {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.479);
+    box-shadow: 0 1px 3px rgba(214, 135, 16, 0.479);
     width: 100%;
     padding: 15px;
   }
   
   .sidebar {
-    width: 300px;
-    background-color: var(--primary);
+    background-color: chocolate;
     border-radius: 5px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    flex-direction: column;
+    justify-content: start;
+    padding: 20px;
   }
   
+  .role{
+    color: white;
+    font-size: 16px;
+  }
+
+  .logo{
+    color: white;
+  }
+
   .content {
     padding: 10px;
+  }
+
+  .menu{
+    margin-top: 150px;
+
   }
 
   .menu-item {

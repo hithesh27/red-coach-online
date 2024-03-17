@@ -44,7 +44,7 @@ input{
 
 .primary-btn {
     background-color: var(--primary);
-    color: white;
+    color: rgb(216, 134, 26);
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -52,7 +52,7 @@ input{
 
   .secondary-btn {
     background-color: var(--secondary);
-    color: white;
+    color: rgb(231, 135, 26);
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -82,4 +82,9 @@ input{
     color: white;
     height: 80px;
     width: 80px;
+}
+
+h1{
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }
