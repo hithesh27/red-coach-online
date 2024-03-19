@@ -1,75 +1,73 @@
 .layout-parent {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    padding: 15px;
-    height:100vh;
-    gap:10px
-  }
-  
-  .body {
-    width: 100%;
-  }
-  
-  .header {
-    box-shadow: 0 1px 3px rgba(214, 135, 16, 0.479);
-    width: 100%;
-    padding: 15px;
-  }
-  
-  .sidebar {
-    background-color: chocolate;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    justify-content: start;
-    padding: 20px;
-  }
-  
-  .role{
-    color: white;
-    font-size: 16px;
-  }
+  display: flex;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+  height: 100vh;
+  gap: 10px;
+}
 
-  .logo{
-    color: white;
-  }
+.body {
+  width: 100%;
+}
 
-  .content {
-    padding: 10px;
-  }
+.header {
+  box-shadow: 0 1px 3px rgba(214, 135, 16, 0.479);
+  width: 100%;
+  padding: 15px;
+}
 
-  .menu{
-    margin-top: 150px;
+.sidebar {
+  background-color: chocolate;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  justify-content: start;
+  padding: 20px;
+}
 
-  }
+.role {
+  color: white;
+  font-size: 16px;
+}
 
-  .menu-item {
-   padding: 5px 15px;
-   width:100%;
-   cursor: pointer;
-   transition: 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: 15px;
-  }
-  
-  .menu-item i{
-    font-size: 20px;
-    margin-right: 10px;
-    color: white;
-  }
+.logo {
+  color: white;
+}
 
-  .menu-item span {
-    color: white;
-    font-size: 18px;
-  }
+.content {
+  padding: 10px;
+}
 
-  .active-menu-item{
-    border: 2px solid white;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  
+.menu {
+  margin-top: 150px;
+}
+
+.menu-item {
+  padding: 5px 15px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 15px;
+}
+
+.menu-item i {
+  font-size: 20px;
+  margin-right: 10px;
+  color: white;
+}
+
+.menu-item span {
+  color: white;
+  font-size: 18px;
+}
+
+.active-menu-item {
+  border: 2px solid white;
+  border-radius: 5px;
+  padding: 5px;
+}

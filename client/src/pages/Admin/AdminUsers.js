@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function AdminUsers() {
-  return (
-    <div>
-      users
-    </div>
-  )
+  return <div>users</div>;
 }
 
-export default AdminUsers
+export default AdminUsers;
