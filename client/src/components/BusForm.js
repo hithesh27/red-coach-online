@@ -4,19 +4,34 @@ import { useDispatch } from "react-redux";
 import { axiosInstance } from "../axiosInstance";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 
-function BusForm({ showBusForm, setShowBusForm, type, getData, selectedBus }) {
+function BusForm({
+  showBusForm,
+  setShowBusForm,
+  type,
+  getData,
+  selectedBus,
+  setSelectedBus,
+}) {
   console.log("Busform");
   const dispatch = useDispatch();
   const onFinish = async (values) => {
     let response = null;
     try {
       dispatch(showLoading());
+
       if (type === "add") {
         response = await axiosInstance.post(
           "http://localhost:5000/api/admin/buses",
           values
         );
       } else {
+        response = await axiosInstance.post(
+          "http://localhost:5000/api/admin/buses-update-bus",
+          {
+            ...values,
+            _id: selectedBus._id,
+          }
+        );
       }
       dispatch(hideLoading());
       if (response.data.success) {
@@ -24,6 +39,9 @@ function BusForm({ showBusForm, setShowBusForm, type, getData, selectedBus }) {
       } else {
         message.error(response.data.message);
       }
+      getData();
+      setShowBusForm(false);
+      setSelectedBus();
     } catch (error) {
       dispatch(hideLoading());
       message.error(error.message);

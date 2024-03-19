@@ -21,6 +21,7 @@ input {
 .card {
   border: 2px soild rgb(16, 94, 26);
   box-shadow: 0 0 2px rgb(128, 128, 128);
+  border-radius: 0 !important;
 }
 
 .text-2xl {
@@ -83,11 +84,16 @@ a {
   width: 80px;
 }
 
-h1 {
+h1,p {
   margin-bottom: 0;
   padding-bottom: 0;
 }
 
 .svg-icon {
+  cursor: pointer;
+}
+
+.underline{
+  text-decoration: underline;
   cursor: pointer;
 }

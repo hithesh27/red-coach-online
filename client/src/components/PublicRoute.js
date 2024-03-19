@@ -9,8 +9,9 @@ function PublicRoute({ children }) {
     }
   }, []);
   const present = localStorage.getItem("token");
-  console.log("public route");
-  return <div>{localStorage.getItem("token") === null && children}</div>;
+  console.log(localStorage.getItem("token") === null, "login");
+  console.log("*", localStorage.getItem("token"), "*");
+  return <div>{children}</div>;
 }
 
 export default PublicRoute;
