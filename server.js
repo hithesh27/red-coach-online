@@ -15,6 +15,9 @@ app.use("/api/users", usersRoute);
 const busesRoute = require("./routes/busRoute");
 app.use("/api/admin", busesRoute);
 
+const bookingsRoute = require("./routes/bookingsRoute");
+app.use("/api/bookings", bookingsRoute);
+
 app.listen(port, () => {
   console.log(`node server listening on port ${port}`);
 });
