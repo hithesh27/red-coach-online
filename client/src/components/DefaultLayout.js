@@ -9,6 +9,7 @@ function DefaultLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
+  console.log("defaultlayout")
   const userMenu = [
     {
       name: "Home",
@@ -22,7 +23,7 @@ function DefaultLayout({ children }) {
     },
     {
       name: "Bookings",
-      path: "admin/bookings",
+      path: "/bookings",
       icon: "ri-file-list-line",
     },
     {
@@ -59,7 +60,10 @@ function DefaultLayout({ children }) {
     },
   ];
   const menuToBeRendered = user.isAdmin ? adminMenu : userMenu;
-  const activeRoute = window.location.pathname;
+  let activeRoute = window.location.pathname;
+  if(window.location.pathname.includes('booknow')){
+    activeRoute='/'
+  }
   return (
     <div className="layout-parent">
       <div className="sidebar">
@@ -114,7 +118,7 @@ function DefaultLayout({ children }) {
         <div className="content">{children}</div>
       </div>
     </div>
-  );
+  )
 }
 
 export default DefaultLayout;

@@ -1,14 +1,13 @@
 const router = require("express").Router();
 const authMiddleware = require("../middleware/Auth");
-//register user
 const User = require("../models/usersModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Bus = require("../models/busModel");
+
 router.post("/register", async (req, res) => {
-  console.log("registerroute", req.body);
   try {
     const existingUser = await User.findOne({ email: req.body.email });
-    console.log("findone");
     if (existingUser) {
       res.send({
         message: "user alraedy exists",
@@ -17,11 +16,8 @@ router.post("/register", async (req, res) => {
       });
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    //console.log(req.body,'check');
-
     req.body.password = hashedPassword;
     const newUser = new User(req.body);
-
     await newUser.save();
     res.send({
       message: "user created successfully",
@@ -35,11 +31,10 @@ router.post("/register", async (req, res) => {
       data: null,
     });
   }
-});
+})
 router.post("/login", async (req, res) => {
   try {
     const userExists = await User.findOne({ email: req.body.email });
-    console.log(userExists);
     if (!userExists) {
       return res.send({
         message: "user not present",
@@ -65,13 +60,12 @@ router.post("/login", async (req, res) => {
       {
         expiresIn: "1d",
       }
-    );
+    )
     res.send({
       message: "loggedin successfully",
       success: true,
       data: jwt_token,
-    });
-    console.log("got token");
+    })
   } catch (error) {
     res.send({
       message: error.message,
@@ -79,25 +73,54 @@ router.post("/login", async (req, res) => {
       data: null,
     });
   }
-});
+})
 router.post("/get-user-by-id", authMiddleware, async (req, res) => {
-  console.log("userRoute");
   try {
-    const userId = req.body.userId; // Potential issue
-    //console.log(userId);
-    const userExists = await User.findById(userId.userId); // Use userId instead of req.body.userId
-    //console.log(userExists)
+    const userId = req.body.userId;
+    const userExists = await User.findById(userId.userId);
     res.send({
       data: userExists,
       message: "user fetched successfully",
       success: true,
-    });
-  } catch (error) {
+    })
+  }catch(error){
     res.send({
       data: null,
       message: error.message,
       success: false,
+    })
+  }
+})
+router.post("/get-all-buses", authMiddleware, async (req, res) => {
+  try {
+    const existingBuses = await Bus.find();
+    return res.status(200).send({
+      data: existingBuses,
+      success: true,
+      message: "Buses fetched successfully",
+    });
+  }catch(error){
+    return res.status(500).send({
+      data: null,
+      success: false,
+      message: error.message,
+    });
+  }
+})
+
+router.post("/get-bus-by-id", authMiddleware, async (req, res) => {
+  try {
+    const busInfo = await Bus.findById(req.body.id);
+    return res.status(200).send({
+      success: true,
+      data: busInfo,
+    });
+  } catch (error) {
+    res.status(200).send({
+      success: false,
+      data: null,
     });
   }
 });
+
 module.exports = router;

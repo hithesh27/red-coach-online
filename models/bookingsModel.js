@@ -3,21 +3,21 @@ const bookingSchema = new mongoose.Schema(
   {
     bus: {
       type: mongoose.Schema.ObjectId,
-      ref: "Bus",
-      require: true,
+      ref: "buses",
+      required: true,
     },
     user: {
       type: mongoose.Schema.ObjectId,
-      ref: "User",
-      require: true,
+      ref: "users",
+      required: true,
     },
     selectedSeats: {
       type: Array,
-      require: true,
+      required: true,
     },
     transactionId: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   {

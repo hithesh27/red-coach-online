@@ -7,64 +7,83 @@ import { showLoading, hideLoading } from "../redux/alertsSlice";
 import { Row, Col, message } from "antd";
 import SeatSelection from "../components/SeatSelection";
 import "../resources/bus.css";
+import StripeCheckout from 'react-stripe-checkout'
 
 function BookNow() {
-  const dispatch = useDispatch();
-  const { id } = useParams();
-  const [bus, setBus] = useState(null);
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const dispatch = useDispatch()
+  const { id } = useParams()
+  const [bus, setBus] = useState(null)
+  const [selectedSeats, setSelectedSeats] = useState([])
 
-  const bookNow = async () => {
+  const bookNow = async (transactionId) => {
     try {
       dispatch(showLoading());
-      console.log(bus._id, "*******");
       const response = await axiosInstance.post(
         "http://localhost:5000/api/bookings/book-seat",
         {
           bus: bus._id,
           selectedSeats: selectedSeats,
+          transactionId
         }
       );
       dispatch(hideLoading());
       if (response.data.success) {
         message.success(response.data.message);
-        // console.log(response.data.data);
+        setSelectedSeats([]);
+        getBus(id);
       } else {
         message.error(response.data.message);
       }
-      //message.success(response.data.message);
     } catch (error) {
       dispatch(hideLoading());
       message.error(error.message);
     }
-  };
+  }
   const getBus = async (id) => {
     try {
       dispatch(showLoading());
       const response = await axiosInstance.post(
-        "http://localhost:5000/api/admin/get-bus-by-id",
+        "http://localhost:5000/api/users/get-bus-by-id",
         {
           id: id,
         }
-      );
+      )
       dispatch(hideLoading());
       if (response.data.success) {
         setBus(response.data.data);
-        // console.log(response.data.data);
       }
-      //message.success(response.data.message);
     } catch (error) {
       message.error(error.message);
     }
-  };
+  }
   useEffect(() => {
     getBus(id);
-  }, []);
-  console.log(bus, "booknow");
+  }, [])
+  const onToken=async (token)=>{
+    try{
+      dispatch(showLoading());
+      const response=await axiosInstance.post("http://localhost:5000/api/bookings/make-payment",{
+        token,
+        amount:selectedSeats.length*bus.fare*100
+      })
+      dispatch(hideLoading());
+      if(response.data.success){
+        message.success(response.data.message);
+        bookNow(response.data.data.transactionId);
+      }else{
+        message.error(response.data.message);
+      }
+    }
+    catch(error){
+      dispatch(hideLoading());
+      message.error(error.message);
+    }
+    console.log(token);
+  }
   return (
     <div>
       {bus && (
-        <Row className="mt-3">
+        <Row className="mt-3" gutter={[30,30]}>
           <Col lg={12} xs={24} sm={24}>
             <h1 className="text-2xl text-secondary">{bus.name}</h1>
             <h1 className="text-md">
@@ -102,15 +121,22 @@ function BookNow() {
                 {selectedSeats.length * bus.fare}
               </h1>
               <hr />
-              <button
-                className={`btn btn-primary ${
-                  selectedSeats.length === 0 && "disabled-btn"
-                }`}
-                disabled={selectedSeats.length === 0}
-                onClick={bookNow}
+              <StripeCheckout
+                billingAddress
+                token={onToken}
+                amount={selectedSeats.length*bus.fare*100}
+                currency="INR"
+                stripeKey="pk_test_51OxXPgSASpGddZqZ8zqhOF0dPGDfVbn7loeZNRRrw7hV4wTSam3uBDlVOB9JK5A4btPzoFG2aM7XFKX49r2A8fZx00U5eY0k52"
               >
-                BookNow
-              </button>
+                <button
+                  className={`btn btn-primary ${
+                    selectedSeats.length === 0 && "disabled-btn"
+                  }`}
+                  disabled={selectedSeats.length === 0}
+                >
+                  BookNow
+                </button>
+              </StripeCheckout>
             </div>
           </Col>
           <Col lg={12} xs={24} sm={24}>

@@ -8,29 +8,21 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 import DefaultLayout from "./DefaultLayout";
+import { axiosInstance } from "../axiosInstance";
 
 function ProtectedRoute({ children }) {
-  const { user } = useSelector((state) => state.user);
+  
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.alert);
   const verifyToken = async () => {
     dispatch(showLoading());
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:5000/api/users/get-user-by-id",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        {}
       );
       dispatch(hideLoading());
-      console.log("response");
       if (response.data.success) {
-        console.log("dispatch");
-        console.log("hello world", response.data.data);
         dispatch(setUser(response.data.data));
       } else {
         localStorage.removeItem("token");

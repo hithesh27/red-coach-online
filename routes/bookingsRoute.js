@@ -2,32 +2,95 @@ const router = require("express").Router();
 const Booking = require("../models/bookingsModel");
 const Bus = require("../models/busModel");
 const authMiddleware = require("../middleware/Auth");
+const stripe=require('stripe')(process.env.stripe_key);
+const { v4: uuidv4 } = require('uuid');
+
+router.post('/get-bookings-by-user-id',authMiddleware,async (req,res)=>{
+
+  try{
+      const bookings=await Booking.find({ user : req.body.userId.userId})
+        .populate('bus')
+        .populate('user')
+        res.status(200).send(
+          {
+
+            message:'bookings fetched successfully',
+            data:bookings,
+            success:true
+          }
+        )
+  }catch(error){
+        res.status(500).send({
+          message:'bookings fetched failed',
+          data:error,
+          success:false
+        })
+  }
+})
+
+router.post('/make-payment',authMiddleware,async (req,res)=>{
+console.log('90');
+try {
+    const {token,amount}=req.body;
+    console.log('pay1');
+    /*const customer=await stripe.customers.create({
+      email:token.email,
+      source:token.id
+    })
+    console.log('pay2');
+    const payment = await stripe.charges.create({
+      amount:amount,
+      currency:'inr',
+      customer:customer.id,
+      receipt_email:token.email,
+      description:'test payment'
+    },{
+      idempotencyKey:uuidv4()
+    })
+    console.log('pay2');
+    // if(payment){*/
+      res.status(200).send({
+        message:'payment successful',
+        data:{
+          transactionId: 1
+        },
+        success:true
+      })
+
+    // }else{
+    //   res.status(500).send({
+    //     message:'payment failed',
+    //     data:error,
+    //     success:false
+    //   })
+    // }
+} catch (error) {
+  console.log(error.message)
+  res.status(500).send({
+    message:'payment failed',
+    data:error,
+    success:false
+  })
+}
+
+})
 
 router.post("/book-seat", authMiddleware, async (req, res) => {
-  console.log("1.", req.body.userId);
   try {
     const newBooking = new Booking({
       user: req.body.userId.userId,
-      ...req.body,
-      transactionId: "1234",
-    });
-
-    console.log("1.", newBooking);
+      ...req.body
+    })
     await newBooking.save();
-    console.log("2.");
     const bus = await Bus.findById(req.body.bus);
-
-    console.log("3", bus);
     bus.seatsBooked = [...bus.seatsBooked, ...req.body.selectedSeats];
-    console.log("3", bus);
     await bus.save();
-    console.log("4");
     return res.status(200).send({
       message: "booking successful",
       data: newBooking,
       success: true,
     });
-  } catch (error) {
+  }catch(error) {
     return res.status(200).send({
       message: "booking failed",
       data: error,
@@ -35,5 +98,4 @@ router.post("/book-seat", authMiddleware, async (req, res) => {
     });
   }
 });
-
 module.exports = router;

@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
-
+import { useNavigate } from "react-router-dom";
 function Register() {
   const dispatch = useDispatch();
-
+  const navigate=useNavigate();
   async function onFinish(values) {
-    console.log(values);
     try {
       dispatch(showLoading());
       const response = await axios.post(
@@ -19,6 +18,7 @@ function Register() {
       dispatch(hideLoading());
       if (response.data.success) {
         message.success(response.data.message);
+        navigate('/login');
       } else {
         message.error(response.data.message);
       }

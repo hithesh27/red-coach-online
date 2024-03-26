@@ -36,5 +36,4 @@ function Bus({ bus }) {
     </div>
   );
 }
-
 export default Bus;

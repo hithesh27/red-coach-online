@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, message, Input } from "antd";
+import { Form, message, Input} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { hideLoading, showLoading } from "../redux/alertsSlice";
@@ -8,8 +8,7 @@ import { useDispatch } from "react-redux";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("login");
-  async function onFinish(values) {
+  const onFinish=async(values) => {
     try {
       dispatch(showLoading());
       const response = await axios.post(
@@ -17,7 +16,7 @@ function Login() {
         values
       );
       dispatch(hideLoading());
-      if (response.data.success) {
+      if (response.data.success){
         message.success(response.data.message);
         localStorage.setItem("token", response.data.data);
         navigate("/");

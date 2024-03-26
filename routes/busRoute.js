@@ -1,6 +1,7 @@
 const router = require("express").Router();
-const Bus = require("../models/busModel");
 const authMiddleware = require("../middleware/Auth");
+const Bus = require("../models/busModel");
+
 router.post("/buses", authMiddleware, async (req, res) => {
   try {
     const existingBus = await Bus.findOne({ number: req.body.number });
@@ -26,7 +27,6 @@ router.post("/buses", authMiddleware, async (req, res) => {
 });
 
 router.post("/get-all-buses", authMiddleware, async (req, res) => {
-  console.log("i am trying to fetch buses");
   try {
     const existingBus = await Bus.find();
     return res.status(200).send({
@@ -34,14 +34,14 @@ router.post("/get-all-buses", authMiddleware, async (req, res) => {
       success: true,
       message: "Buses fetched successfully",
     });
-  } catch (error) {
+  }catch(error){
     return res.status(500).send({
       data: null,
       success: false,
       message: error.message,
     });
   }
-});
+})
 
 router.post("/buses-update-bus", authMiddleware, async (req, res) => {
   try {

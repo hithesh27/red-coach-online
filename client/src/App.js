@@ -1,11 +1,13 @@
 // axios for api request
-//antd -buld ui components
-//react redux
-//redux toolkit
-//redux
-//bootstrap - cdn link we will use normal css styling.
-//icons -remix icons cdn link
-//react -router dom without it .cannot make a single page A
+// antd -buld ui components
+// react redux
+// redux toolkit
+// redux
+// bootstrap - cdn link we will use normal css styling.
+// icons -remix icons cdn link
+// react -router dom without it   cannot  make  a   single   page A
+
+
 import "antd/dist/reset.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -21,8 +23,10 @@ import AdminBuses from "./pages/Admin/AdminBuses";
 import AdminHome from "./pages/Admin/AdminHome";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import BookNow from "./pages/BookNow";
+import Bookings from "./pages/Bookings";
+
+
 function App() {
-  console.log("APP");
   const { loading } = useSelector((state) => state.alert);
   return (
     <div>
@@ -66,6 +70,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AdminBuses />
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/bookings"
+            element={
+              <ProtectedRoute>
+                <Bookings/>
               </ProtectedRoute>
             }
           ></Route>
