@@ -18,6 +18,15 @@ app.use("/api/admin", busesRoute);
 const bookingsRoute = require("./routes/bookingsRoute");
 app.use("/api/bookings", bookingsRoute);
 
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(_dirname, "/client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(_dirname, "client", "build", "index.html"));
+  });
+}
+
 app.listen(port, () => {
   console.log(`node server listening on port ${port}`);
 });

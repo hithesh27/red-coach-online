@@ -42,7 +42,13 @@ router.post("/login", async (req, res) => {
         data: null,
       });
     }
-
+    if(userExists.isBlocked){
+        return res.send({
+          message: "user is blocked,Contact Admin",
+          success:false,
+          data:null
+        })
+    }
     const checkPassword = await bcrypt.compare(
       req.body.password,
       userExists.password
@@ -92,8 +98,9 @@ router.post("/get-user-by-id", authMiddleware, async (req, res) => {
   }
 })
 router.post("/get-all-buses", authMiddleware, async (req, res) => {
+  const { userId, ...newBody } = req.body;
   try {
-    const existingBuses = await Bus.find();
+    const existingBuses = await Bus.find(newBody);
     return res.status(200).send({
       data: existingBuses,
       success: true,
@@ -124,3 +131,37 @@ router.post("/get-bus-by-id", authMiddleware, async (req, res) => {
 });
 
 module.exports = router;
+
+router.post("/get-all-users",authMiddleware,async(req,res)=>{
+  try {
+    const users=await User.find();
+    res.send({
+      message:'Users Fetched Successfully',
+      success:true,
+      data:users
+    })
+  } catch (error) {
+    res.send({
+      message:error.message,
+      success:false,
+      data:null
+    })
+  }
+})
+
+router.post("/update-user-permission",authMiddleware,async(req,res)=>{
+  try {
+    const updated=await User.findByIdAndUpdate(req.body._id,req.body);
+    res.send({
+      message:'permission updated successfully',
+      success:true,
+      data:updated
+    })
+  } catch (error) {
+    res.send({
+      message:'failed to update user',
+      success:false,
+      data:error
+    })
+  }
+})

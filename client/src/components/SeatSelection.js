@@ -22,7 +22,7 @@ function SeatSelection({ selectedSeats, setSelectedSeats, bus }) {
               classSeat = "booked-seat";
             }
             return (
-              <Col span={6}>
+              <Col span={6} key={seat}>
                 <div
                   className={`seat ${classSeat}`}
                   onClick={() => {

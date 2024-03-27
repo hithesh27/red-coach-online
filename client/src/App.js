@@ -58,14 +58,6 @@ function App() {
             }
           ></Route>
           <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminHome />
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
             path="/admin/buses"
             element={
               <ProtectedRoute>

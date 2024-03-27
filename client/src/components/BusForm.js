@@ -1,8 +1,9 @@
 import React from "react";
-import { Form, Modal, Row, Col, message } from "antd";
+import { Form, Modal, Row, Col, message, Select } from "antd";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from "../axiosInstance";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
+
 
 function BusForm({
   showBusForm,
@@ -89,17 +90,20 @@ function BusForm({
           </Col>
           <Col lg={8} xs={24}>
             <Form.Item label="Departure" name="departure">
-              <input type="text" />
+              <input type="time" />
             </Form.Item>
           </Col>
           <Col lg={8} xs={24}>
             <Form.Item label="Arrival" name="arrival">
-              <input type="text" />
+              <input type="time" />
             </Form.Item>
           </Col>
           <Col lg={8} xs={24}>
             <Form.Item label="Type" name="type">
-              <input type="text" />
+            <Select name='' id=''>
+                <option value='AC'>AC</option>
+                <option value='NON-AC'>NON-AC</option>
+              </Select>
             </Form.Item>
           </Col>
           <Col lg={8} xs={24}>
@@ -107,6 +111,17 @@ function BusForm({
               <input type="text" />
             </Form.Item>
           </Col>
+          <Col lg={12} xs={24}>
+            <Form.Item label='Status' name='status'>
+              <Select name='' id=''>
+                <option value='Yet To Start'>Yet To Start</option>
+                <option value='Running'>Running</option>
+                <option value='Completed'>Completed</option>
+              </Select>
+            </Form.Item>
+          </Col>
+
+
         </Row>
         <div className="d-flex justify-content-end">
           <button className="primary-btn" type="submit">

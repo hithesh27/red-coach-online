@@ -8,12 +8,14 @@ import { Row, Col, message } from "antd";
 import SeatSelection from "../components/SeatSelection";
 import "../resources/bus.css";
 import StripeCheckout from 'react-stripe-checkout'
+import { useNavigate } from "react-router-dom";
 
 function BookNow() {
   const dispatch = useDispatch()
   const { id } = useParams()
   const [bus, setBus] = useState(null)
   const [selectedSeats, setSelectedSeats] = useState([])
+  const navigate=useNavigate();
 
   const bookNow = async (transactionId) => {
     try {
@@ -29,8 +31,7 @@ function BookNow() {
       dispatch(hideLoading());
       if (response.data.success) {
         message.success(response.data.message);
-        setSelectedSeats([]);
-        getBus(id);
+        navigate('/bookings')
       } else {
         message.error(response.data.message);
       }
@@ -85,33 +86,33 @@ function BookNow() {
       {bus && (
         <Row className="mt-3" gutter={[30,30]}>
           <Col lg={12} xs={24} sm={24}>
-            <h1 className="text-2xl text-secondary">{bus.name}</h1>
+            <h1 className="text-2xl primary-text">{bus.name}</h1>
             <h1 className="text-md">
               {bus.from} - {bus.to}
             </h1>
             <hr />
             <div className="flex flex-call gap-1">
-              <h1 className="text-lg">
+              <p className="text-lg">
                 <b>JourneyDate</b> : {bus.journeyDate}
-              </h1>
-              <h1 className="text-lg">
+              </p>
+              <p className="text-lg">
                 <b>Fare</b> : {bus.fare}/-
-              </h1>
-              <h1 className="text-lg">
+              </p>
+              <p className="text-lg">
                 <b>DepartureTime</b> : {bus.departure}
-              </h1>
-              <h1 className="text-lg">
+              </p>
+              <p className="text-lg">
                 <b>ArrivalTime</b> : {bus.arrival}
-              </h1>
-              <h1 className="text-lg">
+              </p>
+              <p className="text-lg">
                 <b>capacity</b> : {bus.capacity}
-              </h1>
-              <h1 className="text-lg">
+              </p>
+              <p className="text-lg">
                 <b>seats Left</b> : {bus.capacity - bus.seatsBooked.length}
-              </h1>
+              </p>
             </div>
             <hr />
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
               <h1 className="text-2xl ">
                 <b>selectedSeats: </b>
                 {selectedSeats.join(" ,")}
@@ -129,7 +130,7 @@ function BookNow() {
                 stripeKey="pk_test_51OxXPgSASpGddZqZ8zqhOF0dPGDfVbn7loeZNRRrw7hV4wTSam3uBDlVOB9JK5A4btPzoFG2aM7XFKX49r2A8fZx00U5eY0k52"
               >
                 <button
-                  className={`btn btn-primary ${
+                  className={`primary-btn ${
                     selectedSeats.length === 0 && "disabled-btn"
                   }`}
                   disabled={selectedSeats.length === 0}

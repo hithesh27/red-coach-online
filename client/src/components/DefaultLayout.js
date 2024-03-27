@@ -4,12 +4,12 @@ import Item from "antd/es/list/Item";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { message } from "antd";
 
 function DefaultLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  console.log("defaultlayout")
   const userMenu = [
     {
       name: "Home",
@@ -28,14 +28,14 @@ function DefaultLayout({ children }) {
     },
     {
       name: "Logout",
-      path: "admin/logout",
+      path: "/logout",
       icon: "ri-logout-box-line",
     },
   ];
   const adminMenu = [
     {
       name: "Home",
-      path: "/admin",
+      path: "/",
       icon: "ri-home-line",
     },
     {
@@ -45,17 +45,17 @@ function DefaultLayout({ children }) {
     },
     {
       name: "Users",
-      path: "admin/users",
+      path: "/admin/users",
       icon: "ri-file-user-line",
     },
     {
       name: "Bookings",
-      path: "admin/bookings",
+      path: "/bookings",
       icon: "ri-file-list-line",
     },
     {
       name: "Logout",
-      path: "admin/logout",
+      path: "/logout",
       icon: "ri-logout-box-line",
     },
   ];
@@ -84,10 +84,20 @@ function DefaultLayout({ children }) {
                 className={`${
                   activeRoute === Item.path && "active-menu-item"
                 }  menu-item `}
+                key={index}
               >
                 <i className={Item.icon}></i>
                 {!collapsed && (
-                  <span onClick={() => navigate(`${Item.path}`)}>
+                  <span onClick={() => {
+                   if(Item.name!=='Logout') navigate(`${Item.path}`)
+                    else{
+                      localStorage.removeItem('token');
+                      message.success('LoggedOut successfully');
+                      navigate('/login');
+                  }
+                  }
+                  }
+                  >
                     {Item.name}
                   </span>
                 )}
@@ -103,17 +113,16 @@ function DefaultLayout({ children }) {
               onClick={() => {
                 setCollapsed((collapsed) => !collapsed);
               }}
-              class="ri-menu-2-line"
+              className="ri-menu-2-line"
             ></i>
           ) : (
             <i
               onClick={() => {
                 setCollapsed((collapsed) => !collapsed);
               }}
-              class="ri-close-line"
+              className="ri-close-line"
             ></i>
           )}
-          <h1>header</h1>
         </div>
         <div className="content">{children}</div>
       </div>

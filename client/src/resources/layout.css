@@ -5,6 +5,7 @@
   padding: 15px;
   height: 100vh;
   gap: 10px;
+  overflow-y:hidden ;
 }
 
 .body {
@@ -38,7 +39,9 @@
 
 .content {
   padding: 10px 0px;
-
+  overflow-y: scroll !important;
+  overflow-x: none !important;
+  height:85vh;
 }
 
 .menu {
