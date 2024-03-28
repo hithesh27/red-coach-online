@@ -84,6 +84,7 @@ router.post("/get-user-by-id", authMiddleware, async (req, res) => {
   try {
     const userId = req.body.userId;
     const userExists = await User.findById(userId.userId);
+    console.log(userExists);
     res.send({
       data: userExists,
       message: "user fetched successfully",

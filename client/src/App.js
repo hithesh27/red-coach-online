@@ -24,7 +24,7 @@ import AdminHome from "./pages/Admin/AdminHome";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import BookNow from "./pages/BookNow";
 import Bookings from "./pages/Bookings";
-
+import Profile from "./pages/Profile";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -38,6 +38,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           ></Route>
