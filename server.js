@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const path = require('path')
 //to use dotenv variables
 require("dotenv").config();
 const db = require("./config/dbConfig");
@@ -18,12 +19,13 @@ app.use("/api/admin", busesRoute);
 const bookingsRoute = require("./routes/bookingsRoute");
 app.use("/api/bookings", bookingsRoute);
 
+const __dirname1=path.resolve()
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(_dirname, "/client/build")));
+  app.use(express.static(path.join(__dirname1, "/client/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(_dirname, "client", "build", "index.html"));
+    res.sendFile(path.join(__dirname1, "client", "build", "index.html"));
   });
 }
 
