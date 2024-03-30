@@ -3,16 +3,16 @@ import PageTitle from "../../components/PageTitle";
 import BusForm from "../../components/BusForm";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../../axiosInstance";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { hideLoading, showLoading } from "../../redux/alertsSlice";
 import { message, Table } from "antd";
 
+
 function AdminBuses() {
-  const [showBusForm, setShowBusForm] = useState(false);
+  const [showBusForm,  setShowBusForm] = useState(false);
   const [buses, setBuses] = useState([]);
   const [selectedBus, setSelectedBus] = useState(null);
   const dispatch = useDispatch();
-  console.log("Admin-Bus");
   const columns = [
     {
       title: "name",
@@ -73,7 +73,7 @@ function AdminBuses() {
         </div>
       ),
     },
-  ];
+  ]
   const deleteBus = async (_id) => {
     try {
       dispatch(showLoading);
@@ -90,7 +90,7 @@ function AdminBuses() {
     } catch (error) {
       message.error(error.message);
     }
-  };
+  }
   const getBuses = async () => {
     try {
       dispatch(showLoading());
@@ -101,13 +101,12 @@ function AdminBuses() {
       dispatch(hideLoading());
       if (response.data.success) {
         setBuses(response.data.data);
-        console.log(response.data.data);
       }
-      //message.success(response.data.message);
-    } catch (error) {
+    }catch (error) {
       message.error(error.message);
     }
-  };
+  }
+
   useEffect(() => {
     getBuses();
   }, []);
@@ -115,7 +114,7 @@ function AdminBuses() {
   return (
     <div>
       <div className="d-flex justify-content-between my-2">
-        <PageTitle title="Buses" />
+        <PageTitle title="Buses"/> 
         <button
           className="primary-btn"
           onClick={() => {
@@ -125,7 +124,7 @@ function AdminBuses() {
           Add Bus
         </button>
       </div>
-      <Table columns={columns} dataSource={buses} />
+      <Table columns={columns} dataSource={buses} rowKey='number'/>
       {showBusForm && (
         <BusForm
           showBusForm={showBusForm}
@@ -137,7 +136,6 @@ function AdminBuses() {
         ></BusForm>
       )}
     </div>
-  );
+  )
 }
-
 export default AdminBuses;

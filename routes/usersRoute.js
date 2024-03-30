@@ -71,7 +71,7 @@ router.post("/login", async (req, res) => {
       message: "loggedin successfully",
       success: true,
       data: jwt_token,
-    })
+    })  
   } catch (error) {
     res.send({
       message: error.message,
@@ -84,7 +84,6 @@ router.post("/get-user-by-id", authMiddleware, async (req, res) => {
   try {
     const userId = req.body.userId;
     const userExists = await User.findById(userId.userId);
-    console.log(userExists);
     res.send({
       data: userExists,
       message: "user fetched successfully",
@@ -124,7 +123,7 @@ router.post("/get-bus-by-id", authMiddleware, async (req, res) => {
       data: busInfo,
     });
   } catch (error) {
-    res.status(200).send({
+    res.status(500).send({
       success: false,
       data: null,
     });

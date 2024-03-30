@@ -11,7 +11,6 @@ router.post("/buses", authMiddleware, async (req, res) => {
         message: "Bus already exists",
       });
     }
-    console.log(req.body);
     const newBus = new Bus(req.body);
     await newBus.save();
     return res.send({
@@ -54,7 +53,7 @@ router.post("/buses-update-bus", authMiddleware, async (req, res) => {
     return res.status(500).send({
       success: false,
       message: "failed to update",
-    });
+    })
   }
 });
 
@@ -81,7 +80,7 @@ router.post("/get-bus-by-id", authMiddleware, async (req, res) => {
       data: busInfo,
     });
   } catch (error) {
-    res.status(200).send({
+    res.status(500).send({
       success: false,
       data: null,
     });

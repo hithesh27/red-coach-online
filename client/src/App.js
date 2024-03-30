@@ -20,7 +20,6 @@ import PublicRoute from "./components/PublicRoute";
 import Loader from "./components/Loader";
 import { useSelector } from "react-redux";
 import AdminBuses from "./pages/Admin/AdminBuses";
-import AdminHome from "./pages/Admin/AdminHome";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import BookNow from "./pages/BookNow";
 import Bookings from "./pages/Bookings";
@@ -36,7 +35,7 @@ function App() {
           <Route
             path="/"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isAdminPage={false}>
                 <Home />
               </ProtectedRoute>
             }
@@ -44,7 +43,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isAdminPage={false}>
                 <Profile />
               </ProtectedRoute>
             }
@@ -68,7 +67,7 @@ function App() {
           <Route
             path="/admin/buses"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isAdminPage={true}>
                 <AdminBuses />
               </ProtectedRoute>
             }
@@ -76,7 +75,7 @@ function App() {
           <Route
             path="/bookings"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isAdminPage={false}>
                 <Bookings/>
               </ProtectedRoute>
             }
@@ -84,7 +83,7 @@ function App() {
           <Route
             path="/admin/users"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isAdminPage={true}>
                 <AdminUsers />
               </ProtectedRoute>
             }
@@ -92,7 +91,7 @@ function App() {
           <Route
             path="/booknow/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isAdminPage={false}>
                 <BookNow />
               </ProtectedRoute>
             }

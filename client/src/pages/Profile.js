@@ -2,26 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../axiosInstance';
 import { message } from 'antd';
 import '../resources/profile.css';
+import { useSelector } from 'react-redux';
 function Profile() {
-    const [profile, setProfile] = useState('');
-
-    const getDetails = async () => {
-        try {
-            const response = await axiosInstance.post("http://localhost:5000/api/users/get-user-by-id", {});
-            if (response.data.success) {
-                setProfile(response.data.data);
-            } else {
-                message.error('failed to fetch user details');
-            }
-        } catch (error) {
-            message.error(error.message);
-        }
-    }
-
-    useEffect(() => {
-        getDetails();
-    }, []);
-
+    const {user} = useSelector((state)=>state.user);
+    const profile=user;
     return (
         <div>
             <h1 className="profile-heading">My Profile</h1>

@@ -1,6 +1,5 @@
 import React from 'react'
 import PageTitle from "../components/PageTitle";
-import BusForm from "../components/BusForm";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,12 +20,10 @@ function Bookings() {
     {
       title: "Bus Name",
       dataIndex: "name",
-      key: "bus",
     },
     {
       title: "Bus Number",
       dataIndex: "number",
-      key: "bus",
     },
     {
       title: "Journey Date",
@@ -65,7 +62,7 @@ function Bookings() {
       const response = await axiosInstance.post(
         "http://localhost:5000/api/bookings/get-bookings-by-user-id",
         {}
-      );
+      )
       dispatch(hideLoading());
       if (response.data.success) {
         const mappedData = response.data.data.map((booking)=>{
@@ -79,7 +76,6 @@ function Bookings() {
         })
         setBookings(mappedData);
       }
-      //message.success(response.data.message);
     } catch (error) {
       message.error(error.message);
     }
@@ -91,7 +87,7 @@ function Bookings() {
     <div>
       <PageTitle title="Bookings"/>
       <div className='mt-2'>
-      <Table dataSource={bookings} columns={columns}></Table>
+      <Table dataSource={bookings} columns={columns} rowKey={record => `${record.number}-${record.selectedSeats}`}></Table>
       </div>
 
       {selectedBooking  && 
@@ -131,7 +127,7 @@ function Bookings() {
             <hr/>
             <p>
             <span className='text-secondary'>Total secondary: </span>
-                {selectedBooking.selectedSeats.split(',').length *selectedBooking.fare}
+                {selectedBooking.selectedSeats.split(',').length * selectedBooking.fare}
             </p>
             </div>
 

@@ -1,19 +1,19 @@
 import React from "react";
-import { useEffect } from "react";
-import axios from "axios";
+import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { setUser } from "../redux/usersSlice";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 import DefaultLayout from "./DefaultLayout";
 import { axiosInstance } from "../axiosInstance";
+import AccessDenied from "./AccessDenied";
 
-function ProtectedRoute({ children }) {
-  
+function ProtectedRoute({ children,isAdminPage }) {  
   const Navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showChildern,setShowChildren]=useState(false);
+  const [denied,setDenied]=useState(false);
   const verifyToken = async () => {
     dispatch(showLoading());
     try {
@@ -23,7 +23,12 @@ function ProtectedRoute({ children }) {
       );
       dispatch(hideLoading());
       if (response.data.success) {
-        dispatch(setUser(response.data.data));
+        const role=response.data?.data?.isAdmin;
+        if((isAdminPage===true && role===true) || isAdminPage===false){
+          setShowChildren(true)
+          dispatch(setUser(response.data.data));
+        }else{
+            setDenied(true);        }
       } else {
         localStorage.removeItem("token");
         message.error(response.data.message);
@@ -40,8 +45,12 @@ function ProtectedRoute({ children }) {
     } else {
       Navigate("/login");
     }
-  }, []);
-  return <div>{<DefaultLayout>{children}</DefaultLayout>}</div>;
+  }, [])
+  return (<>{showChildern ? (<div><DefaultLayout>{children}</DefaultLayout></div>) : <></>}
+  
+  {denied ? (<AccessDenied/>):<></>}
+
+  </>)
 }
 
 export default ProtectedRoute;

@@ -1,14 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../axiosInstance";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
-import { Button, Col, Input, Row, message } from "antd";
+import {  Col, Input, Row, message } from "antd";
 import Bus from "../components/Bus";
-import axios from "axios";
 
 function Home() {
-  const userName = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const [buses, setBuses] = useState([]);
   const [filters,setFilters]=useState('');
@@ -28,10 +26,10 @@ function Home() {
         tempFilters
       );
       dispatch(hideLoading());
-      if (response.data.success) {
+      if (response.data.success)  {
         setBuses(response.data.data);
       }
-    }catch (error) {
+    } catch (error) {
       message.error(error.message);
     }
   }
@@ -52,9 +50,9 @@ function Home() {
             <Input type='date' placeholder="Date" value={filters.journeyDate} onChange={(e)=>setFilters({...filters,journeyDate:e.target.value})}/>
           </Col>
           <Col lg={6} sm={24}>
-          <div className="d-flex gap-2">
-            <button className="primary-btn" onClick={()=>{getBuses()}}>Filter</button>
-            <button className="outlined" onClick={()=>{
+          <div className="d-flex gap-2"> 
+            <button className="primary-btn" onClick={()=>{getBuses()}}>Filter</button>   
+            <button className="outlined" onClick={()=>{  
               setFilters({
                 from :'',
                 date:'',
@@ -72,7 +70,7 @@ function Home() {
             <Col lg={12} xs={24} sm={24} key={bus._id}>
               <Bus bus={bus} />
             </Col>
-          );
+          )
         })}
       </Row>
     </div>

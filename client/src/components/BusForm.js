@@ -13,7 +13,6 @@ function BusForm({
   selectedBus,
   setSelectedBus,
 }) {
-  console.log("Busform");
   const dispatch = useDispatch();
   const onFinish = async (values) => {
     let response = null;
@@ -53,7 +52,10 @@ function BusForm({
       width={800}
       title="Add Bus"
       open={showBusForm}
-      onCancel={() => setShowBusForm(false)}
+      onCancel={() => {
+      setShowBusForm(false);
+      setSelectedBus(null)
+      }}
       footer={false}
     >
       <Form layout="vertical" onFinish={onFinish} initialValues={selectedBus}>
@@ -101,8 +103,8 @@ function BusForm({
           <Col lg={8} xs={24}>
             <Form.Item label="Type" name="type">
             <Select name='' id=''>
-                <option value='AC'>AC</option>
-                <option value='NON-AC'>NON-AC</option>
+                <Select.Option value='AC'>AC</Select.Option>
+                <Select.Option value='NON-AC'>NON-AC</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -114,9 +116,9 @@ function BusForm({
           <Col lg={12} xs={24}>
             <Form.Item label='Status' name='status'>
               <Select name='' id=''>
-                <option value='Yet To Start'>Yet To Start</option>
-                <option value='Running'>Running</option>
-                <option value='Completed'>Completed</option>
+                <Select.Option value='Yet To Start'>Yet To Start</Select.Option>
+                <Select.Option value='Running'>Running</Select.Option>
+                <Select.Option value='Completed'>Completed</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -125,7 +127,7 @@ function BusForm({
         </Row>
         <div className="d-flex justify-content-end">
           <button className="primary-btn" type="submit">
-            Save
+            {selectedBus===null ? 'Add' :'Save'}
           </button>
         </div>
       </Form>

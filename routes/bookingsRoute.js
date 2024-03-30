@@ -13,7 +13,6 @@ router.post('/get-bookings-by-user-id',authMiddleware,async (req,res)=>{
         .populate('user')
         res.status(200).send(
           {
-
             message:'bookings fetched successfully',
             data:bookings,
             success:true
@@ -29,10 +28,8 @@ router.post('/get-bookings-by-user-id',authMiddleware,async (req,res)=>{
 })
 
 router.post('/make-payment',authMiddleware,async (req,res)=>{
-console.log('90');
 try {
     const {token,amount}=req.body;
-    console.log('pay1');
     /*const customer=await stripe.customers.create({
       email:token.email,
       source:token.id
@@ -52,7 +49,7 @@ try {
       res.status(200).send({
         message:'payment successful',
         data:{
-          transactionId: 1
+          transactionId: '1'
         },
         success:true
       })
@@ -65,14 +62,12 @@ try {
     //   })
     // }
 } catch (error) {
-  console.log(error.message)
   res.status(500).send({
     message:'payment failed',
     data:error,
     success:false
   })
 }
-
 })
 
 router.post("/book-seat", authMiddleware, async (req, res) => {
@@ -91,7 +86,7 @@ router.post("/book-seat", authMiddleware, async (req, res) => {
       success: true,
     });
   }catch(error) {
-    return res.status(200).send({
+    return res.status(500).send({
       message: "booking failed",
       data: error,
       success: false,

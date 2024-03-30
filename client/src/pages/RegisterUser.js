@@ -5,11 +5,13 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 import { useNavigate } from "react-router-dom";
-import '../resources/auth.css'
+import "../resources/auth.css";
+
+
 
 function Register() {
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   async function onFinish(values) {
     try {
       dispatch(showLoading());
@@ -20,7 +22,7 @@ function Register() {
       dispatch(hideLoading());
       if (response.data.success) {
         message.success(response.data.message);
-        navigate('/login');
+        navigate("/login");
       } else {
         message.error(response.data.message);
       }

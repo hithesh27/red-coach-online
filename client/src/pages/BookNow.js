@@ -10,11 +10,11 @@ import "../resources/bus.css";
 import StripeCheckout from 'react-stripe-checkout'
 import { useNavigate } from "react-router-dom";
 
-function BookNow() {
-  const dispatch = useDispatch()
-  const { id } = useParams()
-  const [bus, setBus] = useState(null)
-  const [selectedSeats, setSelectedSeats] = useState([])
+function BookNow()  {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const [bus, setBus] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const navigate=useNavigate();
 
   const bookNow = async (transactionId) => {
@@ -27,11 +27,11 @@ function BookNow() {
           selectedSeats: selectedSeats,
           transactionId
         }
-      );
+      )
       dispatch(hideLoading());
       if (response.data.success) {
         message.success(response.data.message);
-        navigate('/bookings')
+        navigate('/bookings');
       } else {
         message.error(response.data.message);
       }
@@ -59,7 +59,7 @@ function BookNow() {
   }
   useEffect(() => {
     getBus(id);
-  }, [])
+  }, []);
   const onToken=async (token)=>{
     try{
       dispatch(showLoading());
@@ -79,11 +79,10 @@ function BookNow() {
       dispatch(hideLoading());
       message.error(error.message);
     }
-    console.log(token);
   }
   return (
     <div>
-      {bus && (
+      { bus && (
         <Row className="mt-3" gutter={[30,30]}>
           <Col lg={12} xs={24} sm={24}>
             <h1 className="text-2xl primary-text">{bus.name}</h1>

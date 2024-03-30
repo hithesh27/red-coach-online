@@ -61,10 +61,10 @@ function DefaultLayout({ children }) {
   ];
   const menuToBeRendered = user.isAdmin ? adminMenu : userMenu;
   let activeRoute = window.location.pathname;
-  if(window.location.pathname.includes('booknow')){
-    activeRoute='/'
+  if (window.location.pathname.includes("booknow")) {
+    activeRoute = "/";
   }
-  return (
+  return  (  
     <div className="layout-parent">
       <div className="sidebar">
         <div className="sidebar-header">
@@ -88,15 +88,15 @@ function DefaultLayout({ children }) {
               >
                 <i className={Item.icon}></i>
                 {!collapsed && (
-                  <span onClick={() => {
-                   if(Item.name!=='Logout') navigate(`${Item.path}`)
-                    else{
-                      localStorage.removeItem('token');
-                      message.success('LoggedOut successfully');
-                      navigate('/login');
-                  }
-                  }
-                  }
+                  <span
+                    onClick={() => {
+                      if (Item.name !== "Logout") navigate(Item.path);
+                      else {
+                        localStorage.removeItem("token");
+                        message.success("LoggedOut successfully");
+                        navigate("/login");
+                      }
+                    }}
                   >
                     {Item.name}
                   </span>
@@ -127,7 +127,7 @@ function DefaultLayout({ children }) {
         <div className="content">{children}</div>
       </div>
     </div>
-  )
+  );
 }
 
 export default DefaultLayout;

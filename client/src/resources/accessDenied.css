@@ -1,0 +1,18 @@
+.access-denied-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .access-denied-container h1 {
+    font-size: 2rem;
+    color: red;
+  }
+  
+  .access-denied-container p {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  

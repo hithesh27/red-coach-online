@@ -14,7 +14,7 @@ function SeatSelection({ selectedSeats, setSelectedSeats, bus }) {
     <div className="mx-5">
       <div className="bus-container">
         <Row gutter={[10, 10]}>
-          {Array.from(Array(capacity).keys()).map((seat) => {
+          {  Array.from({length:capacity},(ele,index)=>index).map((seat) => {
             let classSeat = "";
             if (selectedSeats.includes(seat + 1)) {
               classSeat = "selected-seat";
