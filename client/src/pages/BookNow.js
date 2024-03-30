@@ -8,6 +8,7 @@ import { Row, Col, message } from "antd";
 import SeatSelection from "../components/SeatSelection";
 import "../resources/bus.css";
 import StripeCheckout from 'react-stripe-checkout'
+
 import { useNavigate } from "react-router-dom";
 
 function BookNow()  {
@@ -18,8 +19,29 @@ function BookNow()  {
   const navigate=useNavigate();
 
   const bookNow = async (transactionId) => {
-    try {
+  let seatsAvailable=true;
+    try{
       dispatch(showLoading());
+      const response=await axiosInstance.post(
+        "http://localhost:5000/api/users/get-bus-by-id",
+        {
+          id: bus._id,
+        }
+      )
+      dispatch(hideLoading());
+      if(response.data.success){
+        seatsAvailable=response.data.data.seatsBooked.every(element => !selectedSeats.includes(element));
+      }else{
+        seatsAvailable=false;
+      }
+    }catch{
+      seatsAvailable=false;
+    }
+    if(!seatsAvailable){
+      navigate(`/bookingfailed/${bus._id}`);
+    }else{
+    try {
+      dispatch(showLoading()); 
       const response = await axiosInstance.post(
         "http://localhost:5000/api/bookings/book-seat",
         {
@@ -40,6 +62,7 @@ function BookNow()  {
       message.error(error.message);
     }
   }
+}
   const getBus = async (id) => {
     try {
       dispatch(showLoading());
@@ -57,6 +80,7 @@ function BookNow()  {
       message.error(error.message);
     }
   }
+  
   useEffect(() => {
     getBus(id);
   }, []);
@@ -70,7 +94,7 @@ function BookNow()  {
       dispatch(hideLoading());
       if(response.data.success){
         message.success(response.data.message);
-        bookNow(response.data.data.transactionId);
+        bookNow(response.data.data.transactionId,);
       }else{
         message.error(response.data.message);
       }

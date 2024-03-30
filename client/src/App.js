@@ -24,6 +24,7 @@ import AdminUsers from "./pages/Admin/AdminUsers";
 import BookNow from "./pages/BookNow";
 import Bookings from "./pages/Bookings";
 import Profile from "./pages/Profile";
+import BookingFailed from "./pages/BookingFailed";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -54,6 +55,14 @@ function App() {
               <PublicRoute>
                 <Register />
               </PublicRoute>
+            }
+          ></Route>
+          <Route
+            path="/bookingfailed/:busId"
+            element={
+              <ProtectedRoute isAdminPage={false}>
+                <BookingFailed/>
+              </ProtectedRoute>
             }
           ></Route>
           <Route
