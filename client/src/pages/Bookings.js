@@ -126,7 +126,7 @@ function Bookings() {
             </p>
             <hr/>
             <p>
-            <span className='text-secondary'>Total secondary: </span>
+            <span className='text-secondary'>Total price: </span>
                 {selectedBooking.selectedSeats.split(',').length * selectedBooking.fare}
             </p>
             </div>

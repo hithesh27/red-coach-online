@@ -6,7 +6,7 @@ import { showLoading, hideLoading } from "../redux/alertsSlice";
 import {  Col, Input, Row, message } from "antd";
 import Bus from "../components/Bus";
 
-function Home() {
+function Home() { 
   const dispatch = useDispatch();
   const [buses, setBuses] = useState([]);
   const [filters,setFilters]=useState('');

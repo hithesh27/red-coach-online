@@ -7,7 +7,7 @@ import { showLoading, hideLoading } from "../redux/alertsSlice";
 import { Row, Col, message } from "antd";
 import SeatSelection from "../components/SeatSelection";
 import "../resources/bus.css";
-import StripeCheckout from 'react-stripe-checkout'
+// import StripeCheckout from 'react-stripe-checkout'
 
 import { useNavigate } from "react-router-dom";
 
@@ -145,22 +145,18 @@ function BookNow()  {
                 {selectedSeats.length * bus.fare}
               </h1>
               <hr />
-              <StripeCheckout
-                billingAddress
-                token={onToken}
-                amount={selectedSeats.length*bus.fare*100}
-                currency="INR"
-                stripeKey="pk_test_51OxXPgSASpGddZqZ8zqhOF0dPGDfVbn7loeZNRRrw7hV4wTSam3uBDlVOB9JK5A4btPzoFG2aM7XFKX49r2A8fZx00U5eY0k52"
-              >
                 <button
                   className={`primary-btn ${
                     selectedSeats.length === 0 && "disabled-btn"
                   }`}
                   disabled={selectedSeats.length === 0}
+                  onClick={()=>onToken({
+                    payment:1
+                  })}
                 >
                   BookNow
                 </button>
-              </StripeCheckout>
+             
             </div>
           </Col>
           <Col lg={12} xs={24} sm={24}>

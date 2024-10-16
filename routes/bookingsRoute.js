@@ -2,8 +2,8 @@ const router = require("express").Router();
 const Booking = require("../models/bookingsModel");
 const Bus = require("../models/busModel");
 const authMiddleware = require("../middleware/Auth");
-const stripe=require('stripe')(process.env.stripe_key);
-const { v4: uuidv4 } = require('uuid');
+// const stripe=require('stripe')(process.env.stripe_key);
+// const { v4: uuidv4 } = require('uuid');
 
 router.post('/get-bookings-by-user-id',authMiddleware,async (req,res)=>{
 
